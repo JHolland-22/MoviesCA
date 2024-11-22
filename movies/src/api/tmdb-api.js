@@ -58,3 +58,12 @@ export const getActorImages = (id) => {
     .then((json) => json.profiles);
 };
 
+export const getLatestMovie = () => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+  )
+    .then((res) => res.json())
+    .then((json) => json);
+};
+
+
