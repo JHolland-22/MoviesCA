@@ -41,3 +41,20 @@ export const getMovieReviews = (id) => {
       return json.results;
     });
 };
+
+export const getActorDetails = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+  )
+    .then((res) => res.json())
+    .then((json) => json);
+};
+
+export const getActorImages = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/person/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}`
+  )
+    .then((res) => res.json())
+    .then((json) => json.profiles);
+};
+
