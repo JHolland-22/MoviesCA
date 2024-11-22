@@ -6,11 +6,11 @@ import Spinner from "../components/spinner";
 import MovieCard from "../components/movieCard";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import IconButton from "@mui/material/IconButton";
-import { MovieContext } from "../contexts/movieContext"; // Import MoviesContext
+import { MoviesContext } from "../contexts/movieContext"; // Import MoviesContext
 
 const UpcomingMoviesPage = () => {
   const { data, error, isLoading, isError } = useQuery("upcoming", getLatestMovie);
-  const { addToMustWatch } = useContext(MovieContext); // Access the context
+  const { addToMustWatch } = useContext(MoviesContext); // Access the context
 
   if (isLoading) {
     return <Spinner />;

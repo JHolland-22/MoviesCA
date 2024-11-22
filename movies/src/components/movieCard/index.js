@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -11,36 +11,44 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid2";
-import img from '../../images/film-poster-placeholder.png'
+import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
-import Avatar from '@mui/material/Avatar';
-
-
+import img from '../../images/film-poster-placeholder.png';
+import { MoviesContext } from "../../contexts/movieContext";
 
 export default function MovieCard(props) {
-  const movie = props.movie;
+  const { movie } = props;
+  const { favorites, addToFavorites, removeFromFavorites } = useContext(MoviesContext);
+
+  // Check if the movie is in the favorites list
+  const isFavorite = favorites.includes(movie.id);
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();
-    props.selectFavorite(movie.id);
+    if (isFavorite) {
+      removeFromFavorites(movie);
+    } else {
+      addToFavorites(movie);
+    }
   };
 
   return (
     <Card>
- <CardHeader
+      <CardHeader
         avatar={
-          movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
+          isFavorite ? (
+            <Avatar sx={{ backgroundColor: "red" }}>
               <FavoriteIcon />
             </Avatar>
           ) : null
         }
         title={
           <Typography variant="h5" component="p">
-            {movie.title}{" "}
+            {movie.title}
           </Typography>
         }
-      />      <CardMedia
+      />
+      <CardMedia
         sx={{ height: 500 }}
         image={
           movie.poster_path
@@ -50,24 +58,24 @@ export default function MovieCard(props) {
       />
       <CardContent>
         <Grid container>
-          <Grid size={{xs: 6}}>
+          <Grid xs={6}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
               {movie.release_date}
             </Typography>
           </Grid>
-          <Grid size={{xs: 6}}>
+          <Grid xs={6}>
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+              {"  "} {movie.vote_average}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-      <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
-        <FavoriteIcon color="primary" fontSize="large" />
-    </IconButton>
+        <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
+          <FavoriteIcon color={isFavorite ? "error" : "disabled"} fontSize="large" />
+        </IconButton>
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...

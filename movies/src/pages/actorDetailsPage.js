@@ -1,26 +1,39 @@
 import React from "react";
-import { useParams } from 'react-router-dom';
-import ActorDetails from '../components/actorDetails'; 
+import {useParams} from "react-router-dom";
 import PageTemplate from "../components/templateActorPage";
+import {getActor} from "../api/tmdb-api";
+import {useQuery} from "react-query";
+import Spinner from "../components/spinner";
 import ActorDetails from "../components/actorDetails";
 
-const ActorPage = (props) => {
-    const { id } = useParams();
-    const [actor] = useActor(id);
-  
-    return (
-      <>
-        {actor ? (
-          <>
-            <PageTemplate actor={actor}>
-              <ActorDetails actor={actor} />
-            </PageTemplate>
-          </>
-        ) : (
-          <p>Waiting for actor details</p>
-        )}
-      </>
+const ActorPage = () => {
+    const {id} = useParams();
+    const {data: actor, error, isLoading, isError} = useQuery(
+        ["actor", {id: id}],
+        getActor
     );
-  };
-  
-  export default ActorPage;
+
+    if (isLoading) {
+        return <Spinner/>;
+    }
+
+    if (isError) {
+        return <h1>{error.message}</h1>;
+    }
+
+    return (
+        <>
+            {actor ? (
+                <>
+                    <PageTemplate actor={actor}>
+                        <ActorDetails actor={actor}/>
+                    </PageTemplate>
+                </>
+            ) : (
+                <p>Waiting for actor details</p>
+            )}
+        </>
+    );
+};
+
+export default ActorPage;

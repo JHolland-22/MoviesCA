@@ -10,13 +10,13 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Avatar from '@mui/material/Avatar';
 import img from '../../images/film-poster-placeholder.png';
-import { ActorContext } from "../../contexts/actorsContext";
+import { ActorsContext } from "../../contexts/actorContext";
 
 export default function Actorcard({actor, action}){
-    const{ favourites } = useContext(ActorContext);
+    const{ favourites } = useContext(ActorsContext);
 
     if (favourites.find((id) => id == actor.id)){
         actor.favourite = true;
@@ -69,8 +69,8 @@ export default function Actorcard({actor, action}){
               </Grid>
             </CardContent>
             <CardActions disableSpacing>
-                {action && action(movie)}
-                <Link to = {`/actor/${movie.id}`}>
+                {action && action(actor)}
+                <Link to = {`/actor/${actor.id}`}>
                 <Button variant = "outlined" size="medium" colour = "primary">
             
                 More info .......
