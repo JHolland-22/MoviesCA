@@ -7,14 +7,16 @@ import Grid from "@mui/material/Grid2";
 function MovieListPageTemplate({ movies, title, selectFavorite }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
-  const genreId = Number(genreFilter);
+  const genreId = genreFilter === "0" ? 0 : Number(genreFilter);
 
-  let displayedMovies = movies
+  let displayedMovies = (movies || [])
     .filter((m) => {
       return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
     })
     .filter((m) => {
-      return genreId > 0 ? m.genre_ids.includes(genreId) : true;
+      return genreId > 0 && Array.isArray(m.genre_ids)
+        ? m.genre_ids.includes(genreId)
+        : true;
     });
 
   const handleChange = (type, value) => {
@@ -27,11 +29,11 @@ function MovieListPageTemplate({ movies, title, selectFavorite }) {
       <Grid size={12}>
         <Header title={title} />
       </Grid>
-      <Grid container sx={{flex: "1 1 500px"}}>
-        <Grid 
-          key="find" 
-          size={{xs: 12, sm: 6, md: 4, lg: 3, xl: 2}} 
-          sx={{padding: "20px"}}
+      <Grid container sx={{ flex: "1 1 500px" }}>
+        <Grid
+          key="find"
+          size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
+          sx={{ padding: "20px" }}
         >
           <FilterCard
             onUserInput={handleChange}
@@ -39,9 +41,10 @@ function MovieListPageTemplate({ movies, title, selectFavorite }) {
             genreFilter={genreFilter}
           />
         </Grid>
-        <MovieList selectFavorite={selectFavorite} movies={displayedMovies}></MovieList>
+        <MovieList selectFavorite={selectFavorite} movies={displayedMovies} />
       </Grid>
     </Grid>
   );
 }
+
 export default MovieListPageTemplate;

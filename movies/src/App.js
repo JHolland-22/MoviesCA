@@ -1,35 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import logo from './logo.svg';
-import './App.css';
-import Home from './components/Home'; // Ensure you have this component
-import MovieDetails from './components/MovieDetail'; // Your existing MovieDetails component
+// src/App.js
+import React from "react";
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
+import HomePage from "./pages/homePage";
+import MoviePage from "./pages/movieDetailsPage";
+import MovieReviewPage from "./pages/movieReviewPage";
+import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
+import UpcomingMovies from "./pages/UpcomingMovies"; // Import the new Upcoming Movies page
+import SiteHeader from "./components/siteHeader";
+import MovieContextProvider from "./contexts/movieContext";
 
-function App() {
+const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+    <BrowserRouter>
+      <SiteHeader />
+      <MovieContextProvider> {/* Wraps Routes to provide context */}
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/movie/:id" element={<MovieDetails />} />
-          {/* Add more routes as needed */}
+          <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+          <Route path="/reviews/:id" element={<MovieReviewPage />} />
+          <Route path="/movies/:id" element={<MoviePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies/:id" element={<MoviePage />} />
+          <Route path="/movies/upcoming" element={<UpcomingMovies />} /> {/* New Upcoming Movies route */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </div>
-    </Router>
+      </MovieContextProvider>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

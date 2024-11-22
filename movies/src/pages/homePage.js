@@ -1,32 +1,53 @@
 import React, { useState, useEffect } from "react";
+import { getMovies, getGenres } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
-import { getMovies } from "../api/tmdb-api";
+import { useQuery } from 'react-query';
+import Spinner from '../components/spinner';
+import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 
-const HomePage = (props) => {
-  const [movies, setMovies] = useState([]);
-  
-  // Ensuring that movies is defined before filtering
-  const favorites = movies?.filter(m => m.favorite) || [];
-  localStorage.setItem('favorites', JSON.stringify(favorites));
+const HomePage = () => {
+  const [genres, setGenres] = useState([]);
 
-  const addToFavorites = (movieId) => {
-    const updatedMovies = movies.map((m) =>
-      m.id === movieId ? { ...m, favorite: true } : m
-    );
-    setMovies(updatedMovies);
-  };
+  const { data, error, isLoading, isError } = useQuery('discover', getMovies);
 
   useEffect(() => {
-    getMovies().then(movies => {
-      setMovies(movies);
+    getGenres().then((response) => {
+      if (Array.isArray(response)) {
+        setGenres(response);
+      } else {
+        console.error("Expected genres to be an array, but got:", response);
+      }
+    }).catch((error) => {
+      console.error("Error fetching genres:", error);
     });
   }, []);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+
+  const movies = data?.results || [];
+
+  const getMovieGenres = (movie) => {
+    if (!genres || genres.length === 0 || !movie.genre_ids) {
+      return [];
+    }
+
+    return movie.genre_ids
+      .map((genreId) => genres.find((genre) => genre.id === genreId))
+      .filter((genre) => genre);
+  };
+
   return (
     <PageTemplate
-      title='Discover Movies'
+      title="Discover Movies"
       movies={movies}
-      selectFavorite={addToFavorites}
+      action={(movie) => <AddToFavoritesIcon movie={movie} />}
+      getGenresForMovie={getMovieGenres}
     />
   );
 };
