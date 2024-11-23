@@ -16,11 +16,21 @@ const MoviesContextProvider = (props) => {
   };
 
   const addToMustWatch = (movie) => {
-    if (!mustWatch.includes(movie.id)) setMustWatch([...mustWatch, movie.id]);
+    if (!mustWatch.includes(movie.id)) {
+      setMustWatch([...mustWatch, movie.id]);
+      console.log("Added to Must Watch:", movie.id);
+    }
+  };
+
+  const removeFromMustWatch = (movie) => {
+    setMustWatch(mustWatch.filter((id) => id !== movie.id));
   };
 
   const addToWatchlist = (movie) => {
-    if (!watchlists.includes(movie.id)) setWatchlists([...watchlists, movie.id]);
+    if (!watchlists.includes(movie.id)) {
+      setWatchlists([...watchlists, movie.id]);
+      console.log("Added to Watchlist:", movie.id);
+    }
   };
 
   const removeFromWatchlist = (movie) => {
@@ -36,6 +46,7 @@ const MoviesContextProvider = (props) => {
         addToFavorites,
         removeFromFavorites,
         addToMustWatch,
+        removeFromMustWatch,
         addToWatchlist,
         removeFromWatchlist,
       }}
