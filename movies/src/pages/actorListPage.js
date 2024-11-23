@@ -1,7 +1,7 @@
 import React from "react";
 import {useQuery} from "react-query";
 import {getActors} from "../api/tmdb-api";
-import ActorListPageTemplate from "../components/templateActorListPage";
+import ActorListPageTemplate from "../components/templateActorPage";
 import Spinner from "../components/spinner";
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 
@@ -16,12 +16,11 @@ const ActorListPage = () => {
         return <h1>{error.message}</h1>;
     }
 
-    const actors = data.results;
 
     return (
         <ActorListPageTemplate
             title="Popular Actors"
-            actors={actors}
+            actors={data.results}
             action={(actors) => (
             <AddToFavoritesIcon actor={actors}/>
                 

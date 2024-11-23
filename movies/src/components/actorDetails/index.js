@@ -28,34 +28,25 @@ const ActorDetails = ({ actor }) => {
         Overview
       </Typography>
       <Typography variant="h6" component="p">
-        {actor.overview}
+        {actor.overview || "No overview available."}
       </Typography>
+      <Paper component="ul" sx={{ ...root }}></Paper>
       <Paper component="ul" sx={{ ...root }}>
-        <li>
-          <Chip label="Genres" sx={{ ...chip }} color="primary" />
-        </li>
-        {actor.genres.map((g) => (
-          <li key={g.name}>
-            <Chip label={g.name} sx={{ ...chip }} />
-          </li>
-        ))}
+        <Chip
+          icon={<AccessTimeIcon />}
+          label={`${actor.runtime || "N/A"} min`}
+        />
+        <Chip
+          icon={<MonetizationIcon />}
+          label={`${actor.revenue ? actor.revenue.toLocaleString() : "N/A"}`}
+        />
+        <Chip
+          icon={<StarRate />}
+          label={`${actor.vote_average || "N/A"} (${actor.vote_count || 0})`}
+        />
+        <Chip label={`Released: ${actor.release_date || "N/A"}`} />
       </Paper>
-      <Paper component="ul" sx={{ ...root }}>
-        <Chip icon={<AccessTimeIcon />} label={`${actor.runtime} min`} />
-        <Chip icon={<MonetizationIcon />} label={`${actor.revenue.toLocaleString()}`} />
-        <Chip icon={<StarRate />} label={`${actor.vote_average} (${actor.vote_count})`} />
-        <Chip label={`Released: ${actor.release_date}`} />
-      </Paper>
-      <Paper component="ul" sx={{ ...root }}>
-        <li>
-          <Chip label="Production Countries" sx={{ ...chip }} color="primary" />
-        </li>
-        {actor.production_countries.map((country) => (
-          <li key={country.name}>
-            <Chip label={country.name} sx={{ ...chip }} />
-          </li>
-        ))}
-      </Paper>
+      <Paper component="ul" sx={{ ...root }}></Paper>
       <Fab
         color="secondary"
         variant="extended"
@@ -77,5 +68,6 @@ const ActorDetails = ({ actor }) => {
     </>
   );
 };
+
 
 export default ActorDetails;

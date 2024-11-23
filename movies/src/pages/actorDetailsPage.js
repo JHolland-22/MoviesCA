@@ -1,6 +1,6 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import PageTemplate from "../components/templateActorPage";
+import PageTemplate from "../components/templateActorListPage";
 import {getActors} from "../api/tmdb-api";
 import {useQuery} from "react-query";
 import Spinner from "../components/spinner";

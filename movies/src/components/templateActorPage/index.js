@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from "react";
 import ActorHeader from "../actorHeader";
 import Grid from "@mui/material/Grid2";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { getActorImages } from "../../api/tmdb-api";
+import { useQuery } from "react-query";
+import Spinner from '../spinner';
 
 const TemplateActorPage = ({ actor, children }) => {
-  const [images, setImages] = useState([]);
+  const { data: images = [] ,error , isLoading, isError } = useQuery(
+    ["images", { id: actor.id }],
+    getActorImages
+  );
 
-  useEffect(() => {
-    getActorImages(actor.id).then((images) => {
-      setImages(images);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
 
   return (
     <>
@@ -36,7 +41,7 @@ const TemplateActorPage = ({ actor, children }) => {
                     <ImageListItem key={image.file_path} cols={1}>
                     <img
                         src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                        alt={image.poster_path}
+                        alt={image.file_path}
                     />
                     </ImageListItem>
                 ))}
@@ -44,7 +49,7 @@ const TemplateActorPage = ({ actor, children }) => {
           </div>
         </Grid>
 
-        <Grid size={{xs: 9}}>
+        <Grid item xs={9}>
           {children}
         </Grid>
       </Grid>

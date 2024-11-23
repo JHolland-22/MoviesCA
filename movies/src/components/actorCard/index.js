@@ -10,73 +10,78 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
+import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid2";
 import Avatar from '@mui/material/Avatar';
 import img from '../../images/film-poster-placeholder.png';
 import { ActorsContext } from "../../contexts/actorContext";
 
-export default function Actorcard({actor, action}){
-    const{ favourites } = useContext(ActorsContext);
+export default function ActorCard({ actor, action }) {
+  const { favourites = [], addToFavorites, removeFromFavorites } = useContext(ActorsContext);
 
-    if (favourites.find((id) => id == actor.id)){
-        actor.favourite = true;
+  const isFavorite = favourites.includes(actor.id);
 
+  const handleAddToFavorite = (e) => {
+    e.preventDefault();
+    if (isFavorite) {
+      removeFromFavorites(actor);
     } else {
-        actor.favourite = false;
+      addToFavorites(actor);
     }
+  };
 
-    return(
-        <Card>
-            <CardHeader>
-                avatar={
-                    actor.favourite ? (
-                    <Avatar sx ={{backgroundColour: 'red'}}>
-                        <FavoriteIcon/>
-                    </Avatar>
-                    ) : null
-                }
-                title={
-                <Typography variant = "h5" component="p">
-                    {actor.title}{" "}
-                </Typography>
-                }
-        
-            </CardHeader>
-            <CardMedia>
-            sx={{height: 500}}
-            image={
-                actor.poster.path
-                ?'https://image.tmdb.org/t/p/w500/${actor.profile_path}'
-                :img
-            }
-            </CardMedia>
-            <CardContent>
-              <Grid container>
-                <Grid item xs={6}>
-                    <Typography variant = "h6" component = "p">
-                        <CalendarIcon fontSize = "small">
-                            {actor.birth_day}
-                        </CalendarIcon>
-                    </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <Typography variant = "h6" component = "p">
-                        <StarRateIcon fontSize = "small">
-                            {"   "}{actor.vote_average}{" "}
-                        </StarRateIcon>
-                    </Typography>
-                </Grid>
-              </Grid>
-            </CardContent>
-            <CardActions disableSpacing>
-                {action && action(actor)}
-                <Link to = {`/actor/${actor.id}`}>
-                <Button variant = "outlined" size="medium" colour = "primary">
-            
-                More info .......
-                </Button>
-                </Link>
-            </CardActions>
-        </Card>
-    )
+  return (
+    <Card>
+      <CardHeader
+        avatar={
+          isFavorite ? (
+            <Avatar sx={{ backgroundColor: "red" }}>
+              <FavoriteIcon />
+            </Avatar>
+          ) : null
+        }
+        title={
+          <Typography variant="h5" component="p">
+            {actor.name}
+          </Typography>
+        }
+      />
+      <CardMedia
+        sx={{ height: 500 }}
+        image={
+          actor.profile_path
+            ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+            : img
+        }
+        alt={actor.name || "No name available"}
+      />
+      <CardContent>
+        <Grid container>
+          <Grid item xs={6}>
+            <Typography variant="h6" component="p">
+              <CalendarIcon fontSize="small" />
+              {actor.birth_day}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h6" component="p">
+              <StarRateIcon fontSize="small" />
+              {"   "}{actor.vote_average}
+            </Typography>
+          </Grid>
+        </Grid>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
+          <FavoriteIcon color={isFavorite ? "error" : "disabled"} fontSize="large" />
+        </IconButton>
+        {action && action(actor)}
+        <Link to={`/actor/${actor.id}`}>
+          <Button variant="outlined" size="medium" color="primary">
+            More Info .......
+          </Button>
+        </Link>
+      </CardActions>
+    </Card>
+  );
 }

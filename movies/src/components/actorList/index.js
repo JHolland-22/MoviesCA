@@ -1,18 +1,33 @@
-import React from "react";
-import Actor from "../actorCard/";
-import Grid from "@mui/material/Grid2";
+import React, { useEffect, useState } from "react";
+import { getActors } from "../../api/tmdb-api";
+import ActorCard from "../actorCard";
 
-const ActorList = (props) => {
-  let actorCards = props.actors.map((actor) => (
-    <Grid key={actor.id} size={{xs: 12, sm: 6, md: 4, lg: 3, xl: 2}} sx={{padding: "20px"}}>
-    <Actor key={actor.id} actor={actor} action={props.action} />
-    </Grid>
-  ));
+const ActorList = () => {
+  const [actors, setActors] = useState([]);
+
+  useEffect(() => {
+    getActors()
+      .then((data) => {
+        setActors(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching actors:", error);
+      });
+  }, []);
 
   return (
-    <Grid container spacing={2}>
-      {actorCards.length > 0 ? actorCards : <p>No actors available.</p>}
-    </Grid>
+    <div>
+      <h2>Popular Actors</h2>
+      <div className="actor-grid">
+        {actors.length > 0 ? (
+          actors.map((actor) => (
+            <ActorCard key={actor.id} actor={actor} />
+          ))
+        ) : (
+          <p>No actors found.</p>
+        )}
+      </div>
+    </div>
   );
 };
 
