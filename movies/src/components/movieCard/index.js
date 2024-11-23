@@ -7,6 +7,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import  WatchLaterIcon from "@mui/icons-material/WatchLater";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
@@ -19,9 +20,10 @@ import { MoviesContext } from "../../contexts/movieContext";
 export default function MovieCard(props) {
   const { movie } = props;
   const { favorites, addToFavorites, removeFromFavorites } = useContext(MoviesContext);
+  const { watchlists, addToWatchlist, removeFromWatchlist } = useContext(MoviesContext);
 
-  // Check if the movie is in the favorites list
   const isFavorite = favorites.includes(movie.id);
+  const isWatchlist = watchlists.includes(movie.id);
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();
@@ -29,6 +31,15 @@ export default function MovieCard(props) {
       removeFromFavorites(movie);
     } else {
       addToFavorites(movie);
+    }
+  };
+
+  const handleAddToWatchlist = (e) => {
+    e.preventDefault();
+    if (isWatchlist) {
+      removeFromWatchlist(movie);
+    } else {
+      addToWatchlist(movie);
     }
   };
 
@@ -76,6 +87,10 @@ export default function MovieCard(props) {
         <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
           <FavoriteIcon color={isFavorite ? "error" : "disabled"} fontSize="large" />
         </IconButton>
+        <IconButton aria-label="add to watchlist" onClick={handleAddToWatchlist}>
+          <WatchLaterIcon color={isWatchlist ? "primary" : "disabled"} fontSize="large" />
+          </IconButton>
+
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
