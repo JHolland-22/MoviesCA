@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getActors } from "../../api/tmdb-api";
 import ActorCard from "../actorCard";
+import Grid from "@mui/material/Grid2";
 
 const ActorList = () => {
   const [actors, setActors] = useState([]);
@@ -17,16 +18,29 @@ const ActorList = () => {
 
   return (
     <div>
-      <h2>Popular Actors</h2>
-      <div className="actor-grid">
+      <Grid
+        container
+        spacing={2}
+        sx={{ padding: "20px"}}
+      >
         {actors.length > 0 ? (
           actors.map((actor) => (
-            <ActorCard key={actor.id} actor={actor} />
+            <Grid
+              key={actor.id}
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              xl={2}
+            >
+              <ActorCard actor={actor} />
+            </Grid>
           ))
         ) : (
           <p>No actors found.</p>
         )}
-      </div>
+      </Grid>
     </div>
   );
 };

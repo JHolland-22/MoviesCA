@@ -1,39 +1,61 @@
-import React from "react";
-import {useParams} from "react-router-dom";
-import PageTemplate from "../components/templateActorListPage";
-import {getActors} from "../api/tmdb-api";
-import {useQuery} from "react-query";
-import Spinner from "../components/spinner";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import ActorDetails from "../components/actorDetails";
+import PageTemplate from "../components/templateActorPage";
 
-const ActorPage = () => {
-    const {id} = useParams();
-    const {data: actor, error, isLoading, isError} = useQuery(
-        ["actor", {id: id}],
-        getActors
-    );
+const ActorDetailsPage = () => {
+  const { id } = useParams();
+  const [actor, setActor] = useState(null);
+  const [images, setImages] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-    if (isLoading) {
-        return <Spinner/>;
-    }
+  useEffect(() => {
+    const fetchActorDetails = async () => {
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+        );
+        if (!response.ok) throw new Error("Failed to fetch actor details");
+        const actorData = await response.json();
+        setActor(actorData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    if (isError) {
-        return <h1>{error.message}</h1>;
-    }
+    fetchActorDetails();
+  }, [id]);
 
-    return (
-        <>
-            {actor ? (
-                <>
-                    <PageTemplate actor={actor}>
-                        <ActorDetails actor={actor}/>
-                    </PageTemplate>
-                </>
-            ) : (
-                <p>Waiting for actor details</p>
-            )}
-        </>
-    );
+  useEffect(() => {
+    const fetchActorImages = async () => {
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/person/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}`
+        );
+        if (!response.ok) throw new Error("Failed to fetch actor images");
+        const imageData = await response.json();
+        setImages(imageData.profiles || []);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchActorImages();
+  }, [id]);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <h1>{error}</h1>;
+
+  return actor ? (
+    <PageTemplate actor={actor}>
+      <ActorDetails actor={actor} images={images} />
+    </PageTemplate>
+  ) : (
+    <p>Waiting for actor details</p>
+  );
 };
 
-export default ActorPage;
+export default ActorDetailsPage;
