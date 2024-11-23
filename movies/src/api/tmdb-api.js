@@ -117,6 +117,7 @@ export const getActors = () => {
       }
       return response.json();
     })
+    .then((data) => data.results)
     .catch((error) => {
       throw error;
     });

@@ -4,18 +4,16 @@ import FilterCard from "../filterActorsCard";
 import ActorList from "../actorList";
 import Grid from "@mui/material/Grid2";
 
-function ActorListPageTemplate({ actor, title, selectFavorite }) {
+function ActorListPageTemplate({ actors, title, selectFavorite }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
-  const genreId = Number(genreFilter);
 
-  let displayedActors = actor
-    .filter((m) => {
-      return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
-    })
-    .filter((m) => {
-      return genreId > 0 ? m.genre_ids.includes(genreId) : true;
-    });
+  let displayedActors = [];
+
+  if (Array.isArray(actors)) {
+     displayedActors = actors
+    .filter((m) => m.name.toLowerCase().search(nameFilter.toLowerCase()) !== -1);
+    }
 
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);

@@ -7,26 +7,39 @@ import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
 import UpcomingMovies from "./pages/UpcomingMovies";
 import SiteHeader from "./components/siteHeader";
 import MovieContextProvider from "./contexts/movieContext";
+import ActorsContextProvider from "./contexts/actorContext";
 import ActorListPage from "./pages/actorListPage";
 import ActorDetailsPage from "./pages/actorDetailsPage";
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+      mode: 'dark'
+      }
+  },
+);
 
 const App = () => {
   return (
+    <ThemeProvider theme={theme}>
     <BrowserRouter>
       <SiteHeader />
       <MovieContextProvider>
+        <ActorsContextProvider>
         <Routes>
+        <Route path="/" element={<HomePage />} />
           <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
           <Route path="/reviews/:id" element={<MovieReviewPage />} />
           <Route path="/movies/:id" element={<MoviePage />} />
-          <Route path="/" element={<HomePage />} />
           <Route path="/movies/upcoming" element={<UpcomingMovies />} />
-          <Route path="actors"element={<ActorListPage/>} />
-          <Route paht="actors/id" element={<ActorDetailsPage/>}/>
+          <Route path="/actors" element={<ActorListPage />} />
+          <Route path="/actors/:id" element={<ActorDetailsPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
+        </ActorsContextProvider>
       </MovieContextProvider>
     </BrowserRouter>
+    </ThemeProvider>
   );
 };
 

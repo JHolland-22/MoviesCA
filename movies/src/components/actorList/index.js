@@ -3,9 +3,9 @@ import Actor from "../actorCard/";
 import Grid from "@mui/material/Grid2";
 
 const ActorList = (props) => {
-  let actorCards = (props.actors || []).map((m) => (
-    <Grid key={m.id} size={{xs: 12, sm: 6, md: 4, lg: 3, xl: 2}} sx={{padding: "20px"}}>
-    <Actor key={m.id} movie={m} selectFavorite={props.selectFavorite} />
+  let actorCards = props.actors.map((actor) => (
+    <Grid key={actor.id} size={{xs: 12, sm: 6, md: 4, lg: 3, xl: 2}} sx={{padding: "20px"}}>
+    <Actor key={actor.id} actor={actor} action={props.action} />
     </Grid>
   ));
 

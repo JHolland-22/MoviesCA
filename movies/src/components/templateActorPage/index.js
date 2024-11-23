@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MovieHeader from "../headerMovie";
+import ActorHeader from "../actorHeader";
 import Grid from "@mui/material/Grid2";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -9,7 +9,7 @@ const TemplateActorPage = ({ actor, children }) => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    getActorImages(movie.id).then((images) => {
+    getActorImages(actor.id).then((images) => {
       setImages(images);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -17,7 +17,7 @@ const TemplateActorPage = ({ actor, children }) => {
 
   return (
     <>
-      <ActorHeader movie={movie} />
+      <ActorHeader actor={actor} />
 
       <Grid container spacing={5} style={{ padding: "15px" }}>
         <Grid size={{xs: 3}}>
@@ -52,4 +52,4 @@ const TemplateActorPage = ({ actor, children }) => {
   );
 };
 
-export default TemplateMoviePage;
+export default TemplateActorPage;

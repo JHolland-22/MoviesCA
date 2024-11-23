@@ -22,10 +22,9 @@ const ActorListPage = () => {
         <ActorListPageTemplate
             title="Popular Actors"
             actors={actors}
-            action={(actor) => (
-                <>
-                    <AddToFavoritesIcon actor={actor}/>
-                </>
+            action={(actors) => (
+            <AddToFavoritesIcon actor={actors}/>
+                
             )}
         />
     );
