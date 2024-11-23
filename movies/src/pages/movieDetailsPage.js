@@ -4,13 +4,12 @@ import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
 
 const MoviePage = () => {
-  const { id } = useParams(); // Get movie ID from URL
+  const { id } = useParams(); 
   const [movie, setMovie] = useState(null);
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch movie details
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
@@ -30,7 +29,6 @@ const MoviePage = () => {
     fetchMovieDetails();
   }, [id]);
 
-  // Fetch movie images
   useEffect(() => {
     const fetchMovieImages = async () => {
       try {
