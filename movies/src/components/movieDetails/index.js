@@ -9,6 +9,8 @@ import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import { getMovieCredits } from "../../api/tmdb-api";
 import ActorCard from "../actorCard";
+import { Drawer } from "@mui/material";
+import MovieReviews from "../movieReviews";
 
 const root = {
   display: "flex",
@@ -23,6 +25,7 @@ const chip = { margin: 0.5 };
 const MovieDetails = (props) => {
   const movie = props.movie;
   const [cast, setCast] = useState([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     const fetchMovieCredits = async () => {
@@ -85,6 +88,7 @@ const MovieDetails = (props) => {
       <Fab
         color="secondary"
         variant="extended"
+        onClick={() => setDrawerOpen(true)} 
         sx={{
           position: "fixed",
           bottom: 2,
@@ -94,6 +98,15 @@ const MovieDetails = (props) => {
         <NavigationIcon />
         Reviews
       </Fab>
+
+      <Drawer
+              anchor="top"
+              open={drawerOpen}
+              onClose={() => setDrawerOpen(false)}
+              >
+                <MovieReviews movie={movie} />
+            
+      </Drawer>
     </>
   );
 };

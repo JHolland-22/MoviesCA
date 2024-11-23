@@ -70,22 +70,20 @@ export const getMovieImages = ({ queryKey }) => {
   });
 };
 
-export const getMovieReviews = ({ queryKey }) => {
-  const [, idPart] = queryKey;
-  const { id } = idPart;
-  return fetch(
-    `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${process.env.REACT_APP_TMDB_KEY}`
-  ).then((response) => {
-    if (!response.ok) {
-      return response.json().then((error) => {
-        throw new Error(error.status_message || "Something went wrong");
-      });
+export const getMovieReviews = async ({ queryKey }) => {
+  const [, { id }] = queryKey;
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    );
+    const data = await response.json();
+    if (response.ok) {
+      return data.results || [];
     }
-    return response.json();
-  })
-  .catch((error) => {
+    throw new Error(data.status_message || "Something went wrong");
+  } catch (error) {
     throw error;
-  });
+  }
 };
 
 export const getUpcomingMovies = () => {

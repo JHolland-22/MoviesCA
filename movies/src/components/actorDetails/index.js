@@ -4,10 +4,7 @@ import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
-import NavigationIcon from "@mui/icons-material/Navigation";
-import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
-import Drawer from "@mui/material/Drawer";
 import MovieCard from "../movieCard";
 import { getActorMovies } from "../../api/tmdb-api";
 
@@ -22,7 +19,6 @@ const root = {
 
 const ActorDetails = ({ actor }) => {
   const [movies, setMovies] = useState([]);
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     const fetchActorMovies = async () => {
@@ -80,25 +76,6 @@ const ActorDetails = ({ actor }) => {
           </li>
         ))}
       </Paper>
-
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={{
-          position: "fixed",
-          bottom: "1em",
-          right: "1em",
-        }}
-      >
-        <NavigationIcon sx={{ mr: 1 }} />
-        Navigate
-      </Fab>
-      <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <Typography variant="h6" component="div" sx={{ padding: 2 }}>
-          Drawer Content Here
-        </Typography>
-      </Drawer>
     </>
   );
 };
