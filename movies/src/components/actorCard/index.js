@@ -18,7 +18,6 @@ import { ActorsContext } from "../../contexts/actorContext";
 
 export default function ActorCard({ actor, action }) {
   const { favourites = [], addToFavorites, removeFromFavorites } = useContext(ActorsContext);
-
   const isFavorite = favourites.includes(actor.id);
 
   const handleAddToFavorite = (e) => {
@@ -75,12 +74,12 @@ export default function ActorCard({ actor, action }) {
         <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
           <FavoriteIcon color={isFavorite ? "error" : "disabled"} fontSize="large" />
         </IconButton>
-        {action && action(actor)}
-        <Link to={`/actor/${actor.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info .......
-          </Button>
-        </Link>
+        <Link to={`/actors/${actor.id}`}>
+  <Button variant="outlined" size="medium" color="primary">
+    More Info .......
+  </Button>
+</Link>
+
       </CardActions>
     </Card>
   );

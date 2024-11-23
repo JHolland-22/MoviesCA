@@ -123,21 +123,23 @@ export const getActors = () => {
     });
 };
 
-export const getActor = ({queryKey}) => {
-  const [, idPart] = queryKey;
-  const {id} = idPart;
-  return fetch(
+export const getActor = async ({ queryKey }) => {
+  const [, { id }] = queryKey;
+  try {
+    const response = await fetch(
       `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
-  ).then((response) => {
-      if (!response.ok) {
-          throw new Error(response.json().message);
-      }
-      return response.json();
-  })
-      .catch((error) => {
-          throw error
-      });
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch actor details');
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
 };
+
 
 export const getActorImages = (id) => {
   return fetch(

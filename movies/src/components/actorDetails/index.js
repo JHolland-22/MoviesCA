@@ -17,7 +17,6 @@ const root = {
   padding: 1.5,
   margin: 0,
 };
-const chip = { margin: 0.5 };
 
 const ActorDetails = ({ actor }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -28,25 +27,31 @@ const ActorDetails = ({ actor }) => {
         Overview
       </Typography>
       <Typography variant="h6" component="p">
-        {actor.overview || "No overview available."}
+        {actor.biography || "No biography available."}
       </Typography>
-      <Paper component="ul" sx={{ ...root }}></Paper>
+
+      <Paper component="ul" sx={{ ...root }}>
+        <Chip
+          icon={<StarRate />}
+          label={`Known for: ${actor.known_for_department || "N/A"}`}
+        />
+      </Paper>
+
       <Paper component="ul" sx={{ ...root }}>
         <Chip
           icon={<AccessTimeIcon />}
-          label={`${actor.runtime || "N/A"} min`}
+          label={`Born: ${actor.birth_date || "N/A"}`}
         />
         <Chip
           icon={<MonetizationIcon />}
-          label={`${actor.revenue ? actor.revenue.toLocaleString() : "N/A"}`}
+          label={`Net Worth: ${actor.revenue ? actor.revenue.toLocaleString() : "N/A"}`}
         />
         <Chip
           icon={<StarRate />}
-          label={`${actor.vote_average || "N/A"} (${actor.vote_count || 0})`}
+          label={`Vote Average: ${actor.vote_average || "N/A"}`}
         />
-        <Chip label={`Released: ${actor.release_date || "N/A"}`} />
       </Paper>
-      <Paper component="ul" sx={{ ...root }}></Paper>
+
       <Fab
         color="secondary"
         variant="extended"
@@ -68,6 +73,5 @@ const ActorDetails = ({ actor }) => {
     </>
   );
 };
-
 
 export default ActorDetails;

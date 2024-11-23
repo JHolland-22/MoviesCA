@@ -23,7 +23,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
     <BrowserRouter>
-      <SiteHeader />
+      <SiteHeader/>
       <MovieContextProvider>
         <ActorsContextProvider>
         <Routes>
