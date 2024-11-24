@@ -1,4 +1,4 @@
-# react-movie-labs
+# Assignment 1 - ReactJS app.
 Jorja Holland
 ## Overview 
 The assignment involved using The Movie Database to create a Web Application for movies which involved displays information on movies and actors. This was built off the Web App labs which can be found at this repository https://github.com/JHolland-22/react-movie-labs.git
