@@ -1,6 +1,6 @@
-export const getMovies = () => {
+export const getMovies = (page = 1) => {
   return fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -14,6 +14,7 @@ export const getMovies = () => {
       throw error;
     });
 };
+
 
 export const getMovie = (args) => {
   const [, idPart] = args.queryKey;
@@ -86,9 +87,9 @@ export const getMovieReviews = async ({ queryKey }) => {
   }
 };
 
-export const getUpcomingMovies = () => {
+export const getUpcomingMovies = (page = 1) => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -102,6 +103,7 @@ export const getUpcomingMovies = () => {
       throw error;
     });
 };
+
 
 
 export const getActors = () => {
@@ -191,9 +193,27 @@ export const getActorMovies = (actorId) => {
     });
 };
 
-export const getTopMovies = () => {
+export const getTopMovies = (page = 1) => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&api_key=${process.env.REACT_APP_TMDB_KEY}`
+    `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}&api_key=${process.env.REACT_APP_TMDB_KEY}`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.status_message || "Something went wrong");
+        });
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+
+export const searchActorsByName = (name) => {
+  return fetch(
+    `https://api.themoviedb.org/3/search/person?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${name}`
   )
     .then((response) => {
       if (!response.ok) {

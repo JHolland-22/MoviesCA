@@ -5,22 +5,17 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import CardMedia from "@mui/material/CardMedia";
-import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
+import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg';
 
 const formControl = {
   margin: 1,
-  minWidth: 100,
+  minWidth: 220,
   backgroundColor: "rgb(0, 0, 0)"
 };
 
 export default function FilterActorsCard(props) {
-  const handleChange = (e, type, value) => {
-    e.preventDefault();
-    props.onUserInput(type, value);
-  };
-
   const handleTextChange = (e) => {
-    handleChange(e, "name", e.target.value);
+    props.onUserInput("name", e.target.value);
   };
 
   return (
