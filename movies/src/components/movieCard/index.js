@@ -7,7 +7,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import  WatchLaterIcon from "@mui/icons-material/WatchLater";
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
@@ -88,7 +88,7 @@ export default function MovieCard(props) {
           <FavoriteIcon color={isFavorite ? "error" : "disabled"} fontSize="large" />
         </IconButton>
         <IconButton aria-label="add to watchlist" onClick={handleAddToWatchlist}>
-          <WatchLaterIcon color={isWatchlist ? "primary" : "disabled"} fontSize="large" />
+          <PlaylistAddIcon color={isWatchlist ? "primary" : "disabled"} fontSize="large" />
           </IconButton>
 
         <Link to={`/movies/${movie.id}`}>
