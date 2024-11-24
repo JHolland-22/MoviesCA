@@ -12,6 +12,7 @@ import ActorListPage from "./pages/actorListPage";
 import ActorDetailsPage from "./pages/actorDetailsPage";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import WatchlistPage from "./pages/watchlistPage";
+import FavoriteActorPage from "./pages/favoriteActorPage";
 
 const theme = createTheme({
   palette: {
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/movies/watchlist" element={<WatchlistPage/>} />
           <Route path="/actors" element={<ActorListPage />} />
           <Route path="/actors/:id" element={<ActorDetailsPage />} />
+          <Route path="/actors/favorites" element={<FavoriteActorPage/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         </ActorsContextProvider>

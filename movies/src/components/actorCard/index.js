@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -8,24 +7,23 @@ import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
-import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid2";
-import Avatar from '@mui/material/Avatar';
+import Avatar from "@mui/material/Avatar";
+import { Link } from "react-router-dom";
 import img from '../../images/film-poster-placeholder.png';
 import { ActorsContext } from "../../contexts/actorContext";
 
-export default function ActorCard({ actor, action }) {
-  const { favourites = [], addToFavorites, removeFromFavorites } = useContext(ActorsContext);
-  const isFavorite = favourites.includes(actor.id);
+export default function ActorCard({ actor }) {
+  const { favoriteActors = [], addToFavoriteActors, removeFromFavoriteActors } = useContext(ActorsContext);
+  const isFavorite = favoriteActors.includes(actor.id);
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();
     if (isFavorite) {
-      removeFromFavorites(actor);
+      removeFromFavoriteActors(actor);
     } else {
-      addToFavorites(actor);
+      addToFavoriteActors(actor);
     }
   };
 
@@ -58,14 +56,12 @@ export default function ActorCard({ actor, action }) {
         <Grid container>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
               {actor.birth_day}
             </Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />
-              {"   "}{actor.vote_average}
+              {actor.vote_average}
             </Typography>
           </Grid>
         </Grid>
@@ -75,11 +71,10 @@ export default function ActorCard({ actor, action }) {
           <FavoriteIcon color={isFavorite ? "error" : "disabled"} fontSize="large" />
         </IconButton>
         <Link to={`/actors/${actor.id}`}>
-  <Button variant="outlined" size="medium" color="primary">
-    More Info .......
-  </Button>
-</Link>
-
+          <Button variant="outlined" size="medium" color="primary">
+            More Info .......
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
