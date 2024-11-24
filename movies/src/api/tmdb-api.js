@@ -15,6 +15,9 @@ export const getMovies = (page = 1) => {
     });
 };
 
+//Setting page = 1 as a default makes sure the function fetches the first page of results if no page number is given.
+// It keeps things simple and ensures pagination works smoothly when navigating through different pages.
+
 
 export const getMovie = (args) => {
   const [, idPart] = args.queryKey;

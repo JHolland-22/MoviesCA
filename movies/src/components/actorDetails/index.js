@@ -9,70 +9,75 @@ import MovieCard from "../movieCard";
 import { getActorMovies } from "../../api/tmdb-api";
 
 const root = {
-  display: "flex",
-  justifyContent: "center",
-  flexWrap: "wrap",
-  listStyle: "none",
-  padding: 1.5,
-  margin: 0,
+  display: "flex", // Arrange chips in a flexible row layout.
+  justifyContent: "center", // Center-align the chips.
+  flexWrap: "wrap", // Wrap chips to the next row if necessary.
+  listStyle: "none", // Remove default list styling.
+  padding: 1.5, // Add padding inside the container.
+  margin: 0, // Remove default external margins.
 };
 
 const ActorDetails = ({ actor }) => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState([]); // State for storing the actor's movies.
 
   useEffect(() => {
+    // Fetch movies in which the actor appears.
     const fetchActorMovies = async () => {
       try {
-        const data = await getActorMovies(actor.id);
-        setMovies(data.cast.slice(0, 10));
+        const data = await getActorMovies(actor.id); // Fetch movie data using the actor's ID.
+        setMovies(data.cast.slice(0, 10)); // Store up to 10 movies in the state.
       } catch (error) {
-        console.error("Error fetching actor movies:", error);
+        console.error("Error fetching actor movies:", error); // Log any errors during fetch.
       }
     };
 
-    fetchActorMovies();
-  }, [actor.id]);
+    fetchActorMovies(); // Call the function on component mount or when actor ID changes.
+  }, [actor.id]); // Re-run the effect only if actor ID changes.
 
   return (
     <>
+      {/* Overview Section */}
       <Typography variant="h5" component="h3">
         Overview
       </Typography>
       <Typography variant="h6" component="p">
-        {actor.biography || "No biography available."}
+        {actor.biography || "No biography available."} {/* Actor's biography */}
       </Typography>
 
+      {/* Known For Section */}
       <Paper component="ul" sx={{ ...root }}>
         <Chip
-          icon={<StarRate />}
-          label={`Known for: ${actor.known_for_department || "N/A"}`}
+          icon={<StarRate />} // Add an icon.
+          label={`Known for: ${actor.known_for_department || "N/A"}`} // Actor's main field of work.
         />
       </Paper>
 
+      {/* Additional Details Section */}
       <Paper component="ul" sx={{ ...root }}>
         <Chip
-          icon={<AccessTimeIcon />}
-          label={`Born: ${actor.birthday || "N/A"}`}
+          icon={<AccessTimeIcon />} // Icon for time-related data.
+          label={`Born: ${actor.birthday || "N/A"}`} // Actor's birth date.
         />
         <Chip
-          icon={<MonetizationIcon />}
+          icon={<MonetizationIcon />} // Icon for revenue.
           label={`Net Worth: ${
-            actor.revenue ? actor.revenue.toLocaleString() : "N/A"
+            actor.revenue ? actor.revenue.toLocaleString() : "N/A" // Format revenue if available.
           }`}
         />
         <Chip
-          icon={<StarRate />}
-          label={`Vote Average: ${actor.popularity || "N/A"}`}
+          icon={<StarRate />} // Icon for rating-related data.
+          label={`Vote Average: ${actor.popularity || "N/A"}`} // Actor's popularity.
         />
       </Paper>
 
+      {/* Movies Section */}
       <Typography variant="h6" component="h3" sx={{ marginTop: 2 }}>
         Movies
       </Typography>
       <Paper component="ul" sx={{ ...root }}>
         {movies.map((movie) => (
-          <li key={movie.id}>
-            <MovieCard movie={movie} />
+          <li key={movie.id}> {/* Use a unique key for each movie. */}
+            <MovieCard movie={movie} /> {/* Render MovieCard component for each movie. */}
           </li>
         ))}
       </Paper>
