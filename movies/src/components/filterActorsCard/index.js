@@ -4,47 +4,59 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
+import CardMedia from "@mui/material/CardMedia";
+import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
 
 const formControl = {
   margin: 1,
-  minWidth: 220,
-  backgroundColor: "rgb(255, 255, 255)"
+  minWidth: 100,
+  backgroundColor: "rgb(0, 0, 0)"
 };
 
 export default function FilterActorsCard(props) {
+  const handleChange = (e, type, value) => {
+    e.preventDefault();
+    props.onUserInput(type, value);
+  };
+
   const handleTextChange = (e) => {
-    props.onUserInput("name", e.target.value);
+    handleChange(e, "name", e.target.value);
   };
 
   return (
-    <Card 
+    <Card
       sx={{
-        backgroundColor: "rgb(204, 204, 0)"
+        backgroundColor: "rgb(102, 0, 51)"
       }}
       variant="outlined"
     >
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon fontSize="large" />
-          Filter actors by name.
+          Filter actors.
         </Typography>
 
         <TextField
-          sx={{
-            ...formControl,
-            backgroundColor: "#ffffff", 
-            "& .MuiInputBase-root": {
-              color: "#000"
-            }
-          }}
-          id="actor-name-search"
-          label="Search actors"
+          sx={{ ...formControl }}
+          id="filled-search"
+          label="Search field"
           type="search"
           variant="filled"
-          value={props.nameFilter || ""}
+          value={props.nameFilter}
           onChange={handleTextChange}
-          fullWidth
         />
+      </CardContent>
+      <CardMedia
+        sx={{ height: 300 }}
+        image={img}
+        title="Filter"
+      />
+      <CardContent>
+        <Typography variant="h5" component="h1">
+          <SearchIcon fontSize="large" />
+          Filter actors.
+          <br />
+        </Typography>
       </CardContent>
     </Card>
   );

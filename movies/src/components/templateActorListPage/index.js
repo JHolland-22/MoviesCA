@@ -7,13 +7,13 @@ import Grid from "@mui/material/Grid2";
 function ActorListPageTemplate({ actors = [], title, action }) {
   const [nameFilter, setNameFilter] = useState("");
 
-  const displayedActors = actors.filter((actor) =>
-    actor.name?.toLowerCase().includes(nameFilter.toLowerCase())
-  );
-
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
   };
+
+  const displayedActors = actors.filter((actor) =>
+    actor.name && actor.name.toLowerCase().includes(nameFilter.toLowerCase())
+  );
 
   return (
     <Grid container>
@@ -23,7 +23,7 @@ function ActorListPageTemplate({ actors = [], title, action }) {
       <Grid container sx={{ flex: "1 1 500px" }}>
         <Grid
           key="find"
-          size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
+          size={{ xs: 10, sm: 7, md: 6, lg: 3, xl: 3 }}
           sx={{ padding: "20px" }}
         >
           <FilterActorsCard
@@ -31,7 +31,7 @@ function ActorListPageTemplate({ actors = [], title, action }) {
             nameFilter={nameFilter}
           />
         </Grid>
-        <ActorList action={action} actors={displayedActors}></ActorList>
+        <ActorList action={action} actors={displayedActors} />
       </Grid>
     </Grid>
   );

@@ -16,7 +16,7 @@ const formControl =
   {
     margin: 1,
     minWidth: 220,
-    backgroundColor: "rgb(255, 255, 255)"
+    backgroundColor: "rgb(0, 0, 0)"
   };
 
 export default function FilterMoviesCard(props) {
@@ -25,7 +25,7 @@ export default function FilterMoviesCard(props) {
 
   const handleChange = (e, type, value) => {
     e.preventDefault()
-    props.onUserInput(type, value)   // NEW
+    props.onUserInput(type, value)   
   }
   const handleTextChange = e => {
     handleChange(e, "name", e.target.value)
@@ -44,7 +44,7 @@ export default function FilterMoviesCard(props) {
   return (
     <Card 
       sx={{
-        backgroundColor: "rgb(204, 204, 0)"
+        backgroundColor: "rgb(102, 0, 51)"
       }} 
       variant="outlined">
       <CardContent>

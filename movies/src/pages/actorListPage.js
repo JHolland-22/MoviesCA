@@ -24,8 +24,9 @@ const ActorPage = () => {
     return (
         <>
             {actor ? (
-                <>
-                    <PageTemplate actor={actor}>
+                <> <PageTemplate
+                    title="Discover Actors"
+                     actor={actor}>
                         <ActorDetails actor={actor}/>
                     </PageTemplate>
                 </>
