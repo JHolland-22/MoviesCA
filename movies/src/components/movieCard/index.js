@@ -16,6 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 import img from '../../images/film-poster-placeholder.png';
 import { MoviesContext } from "../../contexts/movieContext";
+import WriteReviewIcon from "../cardIcons/writeReview";
 
 export default function MovieCard(props) {
   const { movie } = props;
@@ -96,6 +97,7 @@ export default function MovieCard(props) {
             More Info ...
           </Button>
         </Link>
+        <WriteReviewIcon movie={movie} /> 
       </CardActions>
     </Card>
   );

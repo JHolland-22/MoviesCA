@@ -14,6 +14,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import WatchlistPage from "./pages/watchlistPage";
 import FavoriteActorPage from "./pages/favoriteActorPage";
 import TopMoviesPage from "./pages/topMoviesPage";
+import AddMovieReviewPage from './pages/addMovieReviewPage'
+
 
 // Create a custom theme using Material-UI's theme provider with a dark mode palette
 const theme = createTheme({
@@ -70,6 +72,8 @@ const App = () => {
               
               {/* Favorite actors page route */}
               <Route path="/actors/favorites" element={<FavoriteActorPage />} />
+              <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
+
               
               {/* Catch-all route that redirects any unknown path to the home page */}
               <Route path="*" element={<Navigate to="/" />} />
