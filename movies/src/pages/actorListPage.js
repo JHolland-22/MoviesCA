@@ -1,44 +1,33 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import PageTemplate from "../components/templateActorListPage";
-import { getActors } from "../api/tmdb-api";
 import { useQuery } from "react-query";
-import Spinner from "../components/spinner";
-import ActorDetails from "../components/actorDetails";
+import { getActors } from "../api/tmdb-api"; // Function to fetch actors from API
+import ActorListPageTemplate from "../components/templateActorListPage"; // Template for displaying the actor list
+import Spinner from "../components/spinner"; // Spinner while loading data
 
 const ActorPage = () => {
-  // Get the actor ID from the URL parameters using useParams
-  const { id } = useParams();
-
-  // Fetch actor data using react-query's useQuery hook
-  const { data: actor, error, isLoading, isError } = useQuery(
-    ["actor", { id: id }], // Unique query key with actor id
-    getActors // Function to fetch actor data from the API
+  // Fetching actors from the API using react-query's useQuery hook
+  const { data, error, isLoading, isError } = useQuery(
+    ["actors"], // Query key for fetching actors
+    () => getActors(), // API function for fetching actors
   );
 
-  // If the data is still loading, show a spinner
+  // Handle errors if fetching fails
   if (isLoading) {
     return <Spinner />;
   }
 
-  // If there was an error fetching the data, display the error message
   if (isError) {
     return <h1>{error.message}</h1>;
   }
 
+  const actors = data?.results || []; // Actors list from API response
+
   return (
     <>
-      {actor ? (
-        // If actor data is available, render the PageTemplate and ActorDetails
-        <>
-          <PageTemplate title="Discover Actors" actor={actor}>
-            <ActorDetails actor={actor} />
-          </PageTemplate>
-        </>
-      ) : (
-        // If actor data is not available yet, show a waiting message
-        <p>Waiting for actor details</p>
-      )}
+      {/* Render Actor List Template */}
+      <ActorListPageTemplate
+        title="Popular Actors"
+        actors={actors} // Pass actors data to ActorListPageTemplate
+      />
     </>
   );
 };
