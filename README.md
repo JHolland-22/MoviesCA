@@ -100,7 +100,6 @@ The assignment involved using The Movie Database to create a Web Application for
 + filtering works for name 
 
 <img width="1440" alt="Screenshot 2024-11-25 at 22 37 59" src="https://github.com/user-attachments/assets/bdc261ac-a57d-4cde-8162-9acc2cf9eb3e">
-
 <img width="1440" alt="Screenshot 2024-11-25 at 22 38 06" src="https://github.com/user-attachments/assets/08372bbb-d264-4a68-ab2c-5a92fa4050d3">
 <img width="1440" alt="Screenshot 2024-11-25 at 22 37 42" src="https://github.com/user-attachments/assets/c686adf0-0c4e-4762-bb66-1c0222b5c2d9">
 
