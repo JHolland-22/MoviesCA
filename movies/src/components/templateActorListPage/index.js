@@ -1,31 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../headerActorList";
-import FilterActorsCard from "../filterActorsCard";
-import ActorList from "../actorList";
-import Grid from "@mui/material/Grid2";
+import FilterActorsCard from "../filterActorsCard"; // For the name filter input
+import ActorList from "../actorList"; // Displays the list of actors
+import { getActors } from "../../api/tmdb-api"; // Fetching function
+import Grid from "@mui/material/Grid2"; // Material UI Grid for layout
 
-function ActorListPageTemplate({ actors = [], title, action }) {
-  const [nameFilter, setNameFilter] = useState(""); // State to store the search filter value for actor names
+function ActorListPageTemplate({ title, action }) {
+  const [actors, setActors] = useState([]); // State to store actors
+  const [nameFilter, setNameFilter] = useState(""); // State to store name filter
 
-  // Handle changes in the search filter
+  useEffect(() => {
+    // Fetch the actors when the component mounts
+    getActors()
+      .then((data) => setActors(data)) // Update state with actor data
+      .catch((error) => console.error("Error fetching actors:", error));
+  }, []); // Empty dependency array to run this effect once
+
   const handleChange = (type, value) => {
-    if (type === "name") setNameFilter(value); // Only handle name filter changes
+    if (type === "name") {
+      setNameFilter(value); // Update name filter value
+    }
   };
 
   // Filter actors based on the search filter
   const displayedActors = actors.filter((actor) =>
-    actor.name && actor.name.toLowerCase().includes(nameFilter.toLowerCase()) // Filter actors based on name
+    actor.name && actor.name.toLowerCase().includes(nameFilter.toLowerCase()) // Filter by name
   );
 
   return (
     <Grid container>
-      {/* Header component to display the title */}
       <Grid size={12}>
-        <Header title={title} />
+        <Header title={title} /> {/* Display title */}
       </Grid>
       <Grid container sx={{ flex: "1 1 500px" }}>
         <Grid
-          key="find" // Grid for filter input
+          key="find"
           size={{ xs: 10, sm: 7, md: 6, lg: 3, xl: 3 }}
           sx={{ padding: "20px" }}
         >
