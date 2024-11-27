@@ -12,6 +12,7 @@ The assignment involved using The Movie Database to create a Web Application for
 + Write Review
 + Search by name or genre
 + More Details on movie
++ pagination working
 ![Screenshot 2024-11-24 at 16 59 18](https://github.com/user-attachments/assets/42e3e70a-9917-4f9b-876f-08d1f0df53fa)
 
 
@@ -21,6 +22,8 @@ The assignment involved using The Movie Database to create a Web Application for
 + Can search by name or genre
 + Can favorite , watchlist and write a review 
 + Can find out more information.
++ pagination working
+
 ![Screenshot 2024-11-24 at 16 10 03](https://github.com/user-attachments/assets/f538ec7f-4445-423a-9e27-46b072633a10)
 
 
@@ -30,6 +33,8 @@ The assignment involved using The Movie Database to create a Web Application for
 + Can search by name or genre
 + Can favorite , watchlist and write a review 
 + Can find out more information.
++ pagination working
+
 ![Screenshot 2024-11-24 at 16 13 53](https://github.com/user-attachments/assets/94da22b5-3587-4bfe-86a5-5988841016b4)
 
 
