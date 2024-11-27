@@ -15,16 +15,16 @@ import img from '../../images/film-poster-placeholder.png';
 import { ActorsContext } from "../../contexts/actorContext";
 
 export default function ActorCard({ actor }) {
-  const { favoriteActors = [], addToFavoriteActors, removeFromFavoriteActors } = useContext(ActorsContext); // Access favorite actors and context functions.
+  const { favoriteActors = [], addToFavorites, removeFromFavorites } = useContext(ActorsContext); // Access favorite actors and context functions.
   const isFavorite = favoriteActors.includes(actor.id); // Check if the actor is in the favorites list.
 
   // Toggle favorite status when the button is clicked.
   const handleAddToFavorite = (e) => {
     e.preventDefault(); // Prevent any default link behavior.
     if (isFavorite) {
-      removeFromFavoriteActors(actor); // Remove from favorites if already added.
+      removeFromFavorites(actor); // Remove from favorites if already added.
     } else {
-      addToFavoriteActors(actor); // Add to favorites if not.
+      addToFavorites(actor); // Add to favorites if not.
     }
   };
 

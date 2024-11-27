@@ -8,7 +8,7 @@ const ActorsContextProvider = (props) => {
   const [favoriteActors, setFavoriteActors] = useState([]);
 
   // Function to add an actor to the favorite actors list
-  const addToFavoriteActors = (actor) => {
+  const addToFavorites = (actor) => {
     // Only add the actor if they are not already in the favorite list
     if (!favoriteActors.includes(actor.id)) {
       setFavoriteActors([...favoriteActors, actor.id]);
@@ -16,7 +16,7 @@ const ActorsContextProvider = (props) => {
   };
 
   // Function to remove an actor from the favorite actors list
-  const removeFromFavoriteActors = (actor) => {
+  const removeFromFavorites = (actor) => {
     // Filter out the actor from the list by comparing actor IDs
     setFavoriteActors(favoriteActors.filter((actorId) => actorId !== actor.id));
   };
@@ -26,8 +26,8 @@ const ActorsContextProvider = (props) => {
     <ActorsContext.Provider
       value={{
         favoriteActors,          // List of favorite actors (actor IDs)
-        addToFavoriteActors,     // Function to add an actor to favorites
-        removeFromFavoriteActors, // Function to remove an actor from favorites
+        addToFavorites,     // Function to add an actor to favorites
+        removeFromFavorites, // Function to remove an actor from favorites
       }}
     >
       {props.children} {/* Children components will have access to the context */}
